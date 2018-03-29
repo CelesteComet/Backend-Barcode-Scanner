@@ -4,22 +4,17 @@ var options = {
   promiseLib: promise
 };
 
+console.log(process.env);
+
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/upcs';
+
+let connectionString;
+if (process.env.NODE_ENV === 'production') {
+  connectionString = process.env.DATABASE_URL;
+} else {
+  connectionString = 'postgres://localhost:5432/upcs';
+}
 var db = pgp(connectionString);
 
-// add query functions
+module.exports = db;
 
-const index = (req, res, next) => {
-  db.any('SELECT * FROM upcs')
-    .then(function(data) {
-      res.json(data);
-    })
-    .catch(function(error) {
-      res.json(error);
-    });
-};
-
-module.exports = {
-  index
-};

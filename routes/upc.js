@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const 
+const upc = require('../app/model/Upc');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/', upc.index);
 
 module.exports = router;
